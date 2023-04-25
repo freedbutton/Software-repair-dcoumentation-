@@ -1,0 +1,27 @@
+                                    ##Basic windows repairs/maintence##
+
+
+##Deployment Image Servicing and Mangment##
+##Need to be run in a live enviorment cannot be run in windows recovery or other bootable media##
+##Usally good to run DISM before SFC##
+DISM /online /cleanup-image /cheackhealth
+DISM /online /cleanup-image /scanhealth 
+DISM /online /cleanup-image /restorehealth
+
+##System File Checker##
+##Need to be run in a live enviorment cannot be run in windows recovery or other bootable media##
+SFC -scannow 
+
+
+                                    ##Offline Repairs## 
+                                    
+
+##Check Disk##
+##Has to be run in a none live envioment when disk is not mounted##
+CHKDSK C: /x /r 
+
+
+##System File Checker for off line use when disk is not mounted## 
+SFC /scannow /offbootdir=C:\ /offwindir=C:\Windows 
+
+
