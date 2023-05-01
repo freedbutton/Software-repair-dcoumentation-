@@ -1,4 +1,5 @@
                                     ##Basic windows repairs/maintence##
+                                    ##C is assumed to be the windows boot drive## 
 
 
 ##Deployment Image Servicing and Mangment##
@@ -23,5 +24,56 @@ CHKDSK C: /x /r
 
 ##System File Checker for off line use when disk is not mounted## 
 SFC /scannow /offbootdir=C:\ /offwindir=C:\Windows 
+
+##DISM for offline use##
+Dism /Image:C:\offline /Cleanup-Image /RestoreHealth /Source:c:\test\mount\windows
+
+
+                                 ##ReBuidling BCD and MBR##
+                                 ##These dont always work even if they go perfectly##
+                                 ##I am researching and adding here. Right now this is kinda just a list of things to try before reinstalling windows##
+##Try here first. Simple commands## 
+bootrec.exe /fixmbr
+bootsec.exe /nt60 all /force 
+bootrec.exe /rebuildbcd 
+
+
+##Advanced Rebuild##
+attrib -h -s C:\boot\bcd 
+
+del C:\boot\bcd 
+
+bcdedit /createstore c:\boot\bcd.tmp 
+
+C:\boot\bcd.temp /create {bootmgr} /d "Windows Boot Manger"
+
+bcdedit.exe /import C:\boot\bcd.temp
+
+bcdedit.exe /set {bootmgr} device partition=C: 
+
+bcdedit.exe /timeout 10 
+
+attrib -h -s C:\boot\bcd.temp
+
+del c:\boot\bcd.temp 
+
+bcdedit.exe /create /d "Microsoft Windows" /application osloader ##This should return a REG entry code That looks like {*****-****-****-****-*********} Copy this vaulue##
+
+bcdedit.exe /set {*****-****-****-****-*********} device partion=C: 
+
+bcdedit.exe /set {*****-****-****-****-*********} osdevice partion=C: 
+
+bcdedit.exe /set {*****-****-****-****-*********} path \windows\system32\winload.exe 
+
+bcdedit.exe /set {*****-****-****-****-*********} systemroot \windows 
+
+bcdedit.exe /displayorder {*****-****-****-****-*********}
+
+##If This works for you. Your welocome buy me a beer.##
+
+
+
+
+
 
 
