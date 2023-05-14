@@ -3,7 +3,7 @@
 
 
 ##Deployment Image Servicing and Mangment##
-##Need to be run in a live enviorment cannot be run in windows recovery or other bootable media##
+##Need to be run in a live enviorment cannot be run in windows recovery or other bootable media(Drive must be mounted)##
 ##Usally good to run DISM before SFC##
 DISM /online /cleanup-image /cheackhealth
 DISM /online /cleanup-image /scanhealth 
@@ -33,9 +33,22 @@ Dism /Image:C:\offline /Cleanup-Image /RestoreHealth /Source:c:\test\mount\windo
                                  ##These dont always work even if they go perfectly##
                                  ##I am researching and adding here. Right now this is kinda just a list of things to try before reinstalling windows##
 ##Try here first. Simple commands## 
+
+##this is the first and easiest but probably wont work##
+bootrec /rebuildbcd
+
+##You can try this too##
 bootrec.exe /fixmbr
 bootsec.exe /nt60 all /force 
-bootrec.exe /rebuildbcd 
+bootrec.exe /rebuildbcd
+
+
+##When that fails come here next##
+bcdedit /export c:\bcdbackup
+attrib c:\boot\bcd -h -r -s
+ren c:\boot\bcd bcd.old
+bootrec /rebuildbcd
+
 
 
 ##Advanced Rebuild##
@@ -69,11 +82,33 @@ bcdedit.exe /set {*****-****-****-****-*********} systemroot \windows
 
 bcdedit.exe /displayorder {*****-****-****-****-*********}
 
-##If This works for you. Your welocome buy me a beer.##
+##If This works for you. Your welcome buy me a beer.##
+
+
+
+                                             ##Permantly disabling touch screen##
+                                             ##Cheaper then installing a new screen##
+
+WinKey + R 
+regedit
+
+##Navigate to HKEY_CURRENT_USER\Software\Microsoft\Wisp\Touch##
+
+##Create a new DWORD (32 bit) with the name TouchGate##
+
+##Doubleclik on the newly ceated DWORD and make sure it has the value 0 (0 = touch disabled, 1 = touch enabled)##
+##Now touch screen is disable and wont reenable it's self during windows updates##
 
 
 
 
+                                            ##Disabling the windows Key permanatly##
+                                            ##Belive it or not I have had the Windows key cause issues before. No i dont know how it happened but it did so now we are here##
 
-
+WinKey + R ##or just search regedit in the Windows search bar. Since this repair is assuming the windows key is acting up## 
+regedit 
+##Navigate to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout##
+##From the Edit menu select New - Binary Value Enter a name of "Scancode Map" and press enter##
+##Double click on the new value and set to 0000 0000 0000 0000 0300 0000 0000 5BE0 0000 5CE0 0000 0000 Do not type the spaces, I only include them only to help you view the data##
+##Reboot##
 
