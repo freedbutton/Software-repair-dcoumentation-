@@ -42,6 +42,10 @@ bootrec.exe /fixmbr
 bootsec.exe /nt60 all /force 
 bootrec.exe /rebuildbcd
 
+##You Can also try This##
+bcdboot c:\windows /s C: /f ALL
+bootrec /fixmbr
+bootrec /rebuildbcd
 
 ##When that fails come here next##
 bcdedit /export c:\bcdbackup
@@ -86,6 +90,17 @@ bcdedit.exe /displayorder {*****-****-****-****-*********}
 
 
 
+
+                                            ##Changing MBR formatted drive to GPT without data loss##
+Diskpart
+List Disk ## Determine Disk Number##
+Exit
+MBR2GPT /validate /disk:(DiskNumber)
+MBR2GPT /convert /disk:(DiskNumber)
+sfc -scannow
+
+
+
                                              ##Permantly disabling touch screen##
                                              ##Cheaper then installing a new screen##
 
@@ -112,3 +127,10 @@ regedit
 ##Double click on the new value and set to 0000 0000 0000 0000 0300 0000 0000 5BE0 0000 5CE0 0000 0000 Do not type the spaces, I only include them only to help you view the data##
 ##Reboot##
 
+
+                                              ##Driver Manipulation##
+
+DISM /Image:C:\ /get-drivers
+##Get Drivers From OEM##
+DISM /Image:C:\ /Add-Driver /Driver:D:\ /Recurse##Adds Driver##
+DISM /Image:C:\ /Remove-Driver /Driver:oem#.inf##Removes Driver##
