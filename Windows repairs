@@ -29,6 +29,21 @@ SFC /scannow /offbootdir=C:\ /offwindir=C:\Windows
 Dism /Image:C:\offline /Cleanup-Image /RestoreHealth /Source:c:\test\mount\windows
 
 
+
+##Where the regastry files are located when working in an offline enviomrent##
+##You will probably never need this but its good info##
+C:\Windows\System32\Config ##This is the diretory##
+C:\Windows\System32\Config\Default ##HKEY_USERS\DEFAULT##
+C:\Windows\System32\Config\SAM ##HKEY_LOCAL_MACHINE\SAM##
+C:\Windows\System32\Config\Security##HKEY_LOCAL_MACHINE\Security##
+C:\Windows\System32\Config\Software##HKEY_LOCAL_MACHINE\Software##
+C:\Windows\System32\Config\System##HKEY_LOCAL_MACHINE\System##
+##For Reg files Contatining user data##
+C:\Users\<username>\NTUSER.DAT
+C:\Users\<username>\AppData\Local\Microsoft\Windows\USRCLASS.DAT
+
+
+
                                  ##ReBuidling BCD and MBR##
                                  ##These dont always work even if they go perfectly##
                                  ##I am researching and adding here. Right now this is kinda just a list of things to try before reinstalling windows##
