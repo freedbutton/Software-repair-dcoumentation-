@@ -149,3 +149,13 @@ DISM /Image:C:\ /get-drivers
 ##Get Drivers From OEM##
 DISM /Image:C:\ /Add-Driver /Driver:D:\ /Recurse##Adds Driver##
 DISM /Image:C:\ /Remove-Driver /Driver:oem#.inf##Removes Driver##
+
+
+
+
+                                                ##Windows update removal##
+##To find the needed KB number of an update##
+wmic qfe list brief
+##Remove the update. This might onl;y be able to be done in windows unsure as of yet##
+wusa /uninstall /kb:KB_number
+
