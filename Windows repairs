@@ -14,6 +14,12 @@ DISM /online /cleanup-image /restorehealth
 SFC -scannow 
 
 
+##Side notes to some issues with using DISM commands##
+##DISM WILL NOT SERVICE VERSIONS OF WINDOWS NEWER THEN THE VERSION OF DISM YOU ARE USING. This could lead to issue when servicing a windows install with a recovery USB 
+rather then using the windows recovery enviorment.##
+
+
+
                                     ##Offline Repairs## 
                                     
 
